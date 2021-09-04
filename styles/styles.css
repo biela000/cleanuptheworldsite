@@ -118,3 +118,29 @@ main section {
 #last {
     border-bottom: solid #2f8245 2px;
 }
+
+#cardset {
+    display: grid;
+    margin: auto;
+    grid-template-columns: 200px 200px 200px 200px;
+    grid-template-rows: 250x 250px 250px;
+    grid-column-gap: 50px;
+    grid-row-gap: 5px;
+    width: 950px;
+    padding: 20px;
+    grid-auto-columns: 200px;
+    grid-auto-rows: 250px;
+}
+
+.card {
+    background-color: #2f8245;
+    width: 200px;
+    height: 250px;
+}
+
+.placeholder {
+    width: 200px;
+    height: 250px;
+    background-color: #141414;
+    display: none;
+}
