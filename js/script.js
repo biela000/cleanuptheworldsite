@@ -1,4 +1,4 @@
-const possible_symbols = ['yellow', 'blue', 'red', 'orange', 'purple', 'pink'];
+const possible_symbols = ['url("../img/cardfront1.png")', 'url("../img/cardfront2.png")', 'url("../img/cardfront3.png")', 'url("../img/cardfront4.png")', 'url("../img/cardfront5.png")', 'url("../img/cardfront6.png")'];
 const cards = document.querySelectorAll('.card');
 const placeholders = document.querySelectorAll('.placeholder');
 console.log(cards.length);
@@ -25,7 +25,7 @@ const showCards = async () => {
     }
     await sleep(3000);
     for (let i = 0; i < cards.length; i+=1) {
-        cards[i].style.background = '#2f8245';
+        cards[i].style.background = 'url("../img/cardback.png")';
     }
     cardsshown = true;
 }
@@ -59,8 +59,8 @@ for (let i = 0; i < cards.length; i += 1) {
                 }
             }
             else {
-                cards[prev].style.background = '#2f8245';
-                cards[i].style.background = '#2f8245';
+                cards[prev].style.background = 'url("../img/cardback.png")';
+                cards[i].style.background = 'url("../img/cardback.png")';
                 lives -= 1;
                 if (lives === 0) {
                     for (let i = 0; i < 12; i += 1) {
@@ -97,5 +97,5 @@ function gameStart() {
             card_symbols.push(symbol);
         }
         showCards();
-        }
     }
+}

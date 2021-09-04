@@ -124,26 +124,28 @@ main section {
 
 #cardset {
     display: grid;
-    grid-template-columns: 200px 200px 200px 200px;
-    grid-template-rows: 250x 250px 250px;
+    grid-template-columns: 200px 200px 200px 200px 200px 200px;
+    grid-template-rows: 300px 300px;
     grid-column-gap: 50px;
-    grid-row-gap: 5px;
-    width: 990px;
+    grid-row-gap: 20px;
+    width: 1500px;
     padding: 20px;
     grid-auto-columns: 200px;
-    grid-auto-rows: 250px;
+    grid-auto-rows: 300px;
     margin-top: 20px;
 }
 
 .card {
-    background-color: #2f8245;
+    border: solid #fff 2px;
+    border-radius: 5px;
+    background: url("../img/cardback.png");
     width: 200px;
-    height: 250px;
+    height: 300px;
 }
 
 .placeholder {
     width: 200px;
-    height: 250px;
+    height: 300px;
     background-color: #141414;
     display: none;
 }
@@ -156,6 +158,8 @@ main section {
     border: none;
     border-radius: 10px;
     margin-top: 20px;
+    transition: 0.2s;
+    border: solid #2f8245 2px;
 }
 
 #memoryh1 {
@@ -169,4 +173,15 @@ main section {
     margin-top: 200px;
     font-size: 80px;
     display: none;
+}
+
+#startbutton:hover {
+    background-color: #141414;
+    color: #2f8245;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.card:hover {
+    cursor: pointer;
 }
