@@ -24,11 +24,13 @@ const showCards = async () => {
     for (let i = 0; i < cards.length; i+=1) {
         flipCard(cards[i]);
     }
-    await sleep(3000);
-    for (let i = 0; i < cards.length; i+=1) {
-        flipCard(cards[i]);
-    }
-    cardsshown = true;
+    //await sleep(3000);
+    setTimeout(() => {
+        for (let i = 0; i < cards.length; i+=1) {
+            flipCard(cards[i]);
+        }
+        cardsshown = true;
+    }, 3000);
 }
 let isclicked = false;
 let prev;
@@ -38,50 +40,76 @@ let lives = 3;
 function flipCard(card) {
     card.classList.toggle("flipCard");
 }
+function fadeCard(card) {
+    card.classList.toggle("fadeCard");
+}
+function flipX(card) {
+    card.classList.toggle("flipX");
+}
+function unflipX(card) {
+    card.classList.toggle("unflipX");
+}
 for (let i = 0; i < cards.length; i += 1) {
-    cards[i].addEventListener('click', async () => {
+    cards[i].addEventListener('click', () => {
         if (!isclicked && cardsshown) {
             flipCard(cards[i]);
             isclicked = true;
             prev = i;
         }
-        else if (isclicked && fundone && cardsshown) {
+        else if (isclicked && fundone && cardsshown && prev != i) {
             fundone = false;
             flipCard(cards[i]);
-            await sleep(500);
-            if (card_symbols[prev] == card_symbols[i]) {
-                cards[prev].style.display = 'none';
-                cards[i].style.display = 'none';
-                flipCard(cards[prev]);
-                flipCard(cards[i]);
-                placeholders[prev].style.display = 'block';
-                placeholders[i].style.display = 'block';
-                pairs += 1;
-                if (pairs === 6) {
-                    for (let i = 0; i < 12; i += 1) {
-                        placeholders[i].style.display = 'none';
-                    }
-                    document.getElementById('w').style.display = 'inline-block';
+            setTimeout(() => {
+                if (card_symbols[prev] == card_symbols[i]) {
+                    //fadeCard(cards[prev]);
+                    cards[prev].style.opacity = 0;
+                    flipCard(cards[prev]);
+                    //flipX(cards[prev]);
+                    //fadeCard(cards[i]);
+                    cards[i].style.opacity = 0;
+                    flipCard(cards[i]);
+                    //flipX(cards[i]);
+                    setTimeout(() => {
+                        cards[prev].style.display = 'none';
+                        cards[i].style.display = 'none';
+                        //flipCard(cards[prev]);
+                        //flipCard(cards[i]);
+                        //unflipX(cards[prev]);
+                        //unflipX(cards[i]);
+                        cards[prev].style.opacity = 1;
+                        cards[i].style.opacity = 1;
+                        placeholders[prev].style.display = 'block';
+                        placeholders[i].style.display = 'block';
+                        pairs += 1;
+                        if (pairs === 6) {
+                            for (let i = 0; i < 12; i += 1) {
+                                placeholders[i].style.display = 'none';
+                            }
+                            document.getElementById('w').style.display = 'inline-block';
+                        }                        
+                        isclicked = false;
+                        fundone = true;
+                    }, 500);
                 }
-            }
-            else {
-                flipCard(cards[prev]);
-                flipCard(cards[i]);
-                lives -= 1;
-                if (lives === 0) {
-                    for (let i = 0; i < 12; i += 1) {
-                        if (cards[i].style.display != 'none') {
-                            cards[i].style.display = 'none';
+                else {
+                    flipCard(cards[prev]);
+                    flipCard(cards[i]);
+                    lives -= 1;
+                    if (lives === 0) {
+                        for (let i = 0; i < 12; i += 1) {
+                            if (cards[i].style.display != 'none') {
+                                cards[i].style.display = 'none';
+                            }
+                            else {
+                                placeholders[i].style.display = 'none';
+                            }
                         }
-                        else {
-                            placeholders[i].style.display = 'none';
-                        }
+                        document.getElementById('l').style.display = 'inline-block';
                     }
-                    document.getElementById('l').style.display = 'inline-block';
+                    isclicked = false;
+                    fundone = true;
                 }
-            }
-            isclicked = false;
-            fundone = true;
+            }, 1000);
         }
     });
 }
@@ -89,6 +117,7 @@ function gameStart() {
     if (document.getElementById('w').style.display != 'none' || document.getElementById('l').style.display != 'none') {
         document.getElementById('w').style.display = 'none';
         document.getElementById('l').style.display = 'none';
+        cardsshown = false;
         lives = 3;
         pairs = 0;
         for (let i = 0; i < 12; i += 1) {
