@@ -34,10 +34,57 @@ let prev;
 let fundone = true;
 let pairs = 0;
 let lives = 3;
+for (let i = 0; i < cards.length; i += 1) {
+    cards[i].addEventListener('click', async () => {
+        if (!isclicked && cardsshown) {
+            cards[i].style.background = card_symbols[i];
+            isclicked = true;
+            prev = i;
+        }
+        else if (isclicked && fundone && cardsshown) {
+            fundone = false;
+            cards[i].style.background = card_symbols[i];
+            await sleep(500);
+            if (card_symbols[prev] == card_symbols[i]) {
+                cards[prev].style.display = 'none';
+                cards[i].style.display = 'none';
+                placeholders[prev].style.display = 'block';
+                placeholders[i].style.display = 'block';
+                pairs += 1;
+                if (pairs === 6) {
+                    for (let i = 0; i < 12; i += 1) {
+                        placeholders[i].style.display = 'none';
+                    }
+                    document.getElementById('w').style.display = 'inline-block';
+                }
+            }
+            else {
+                cards[prev].style.background = '#2f8245';
+                cards[i].style.background = '#2f8245';
+                lives -= 1;
+                if (lives === 0) {
+                    for (let i = 0; i < 12; i += 1) {
+                        if (cards[i].style.display != 'none') {
+                            cards[i].style.display = 'none';
+                        }
+                        else {
+                            placeholders[i].style.display = 'none';
+                        }
+                    }
+                    document.getElementById('l').style.display = 'inline-block';
+                }
+            }
+            isclicked = false;
+            fundone = true;
+        }
+    });
+}
 function gameStart() {
     if (document.getElementById('w').style.display != 'none' || document.getElementById('l').style.display != 'none') {
         document.getElementById('w').style.display = 'none';
         document.getElementById('l').style.display = 'none';
+        lives = 3;
+        pairs = 0;
         for (let i = 0; i < 12; i += 1) {
             cards[i].style.display = 'block';
         }
@@ -50,47 +97,5 @@ function gameStart() {
             card_symbols.push(symbol);
         }
         showCards();
-        for (let i = 0; i < cards.length; i += 1) {
-            cards[i].addEventListener('click', async () => {
-                if (!isclicked && cardsshown) {
-                    cards[i].style.background = card_symbols[i];
-                    isclicked = true;
-                    prev = i;
-                }
-                else if (isclicked && fundone && cardsshown) {
-                    fundone = false;
-                    cards[i].style.background = card_symbols[i];
-                    await sleep(500);
-                    if (card_symbols[prev] == card_symbols[i]) {
-                        cards[prev].style.display = 'none';
-                        cards[i].style.display = 'none';
-                        placeholders[prev].style.display = 'block';
-                        placeholders[i].style.display = 'block';
-                        pairs += 1;
-                        if (pairs === 6) {
-                            for (let i = 0; i < 12; i += 1) {
-                                placeholders[i].style.display = 'none';
-                            }
-                            document.getElementById('w').style.display = 'inline-block';
-                        }
-                    }
-                    else {
-                        cards[prev].style.background = '#2f8245';
-                        cards[i].style.background = '#2f8245';
-                        lives -= 1;
-                        if (lives === 0) {
-                            for (let i = 0; i < 12; i += 1) {
-                                if (cards[i].style.display != 'none') {
-                                    cards[i].style.display = 'none';
-                                }
-                            }
-                            document.getElementById('l').style.display = 'inline-block';
-                        }
-                    }
-                    isclicked = false;
-                    fundone = true;
-                }
-            });
         }
     }
-}
