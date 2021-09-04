@@ -1,5 +1,6 @@
-const possible_symbols = ['url("../img/cardfront1.png")', 'url("../img/cardfront2.png")', 'url("../img/cardfront3.png")', 'url("../img/cardfront4.png")', 'url("../img/cardfront5.png")', 'url("../img/cardfront6.png")'];
+const possible_symbols = ['img/cardfront1.png', 'img/cardfront2.png', 'img/cardfront3.png', 'img/cardfront4.png', 'img/cardfront5.png', 'img/cardfront6.png'];
 const cards = document.querySelectorAll('.card');
+const front_cards = document.querySelectorAll('.front');
 const placeholders = document.querySelectorAll('.placeholder');
 console.log(cards.length);
 let card_symbols = [];
@@ -21,11 +22,11 @@ const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 let cardsshown = false;
 const showCards = async () => {
     for (let i = 0; i < cards.length; i+=1) {
-        cards[i].style.background = card_symbols[i];
+        flipCard(cards[i]);
     }
     await sleep(3000);
     for (let i = 0; i < cards.length; i+=1) {
-        cards[i].style.background = 'url("../img/cardback.png")';
+        flipCard(cards[i]);
     }
     cardsshown = true;
 }
@@ -34,20 +35,25 @@ let prev;
 let fundone = true;
 let pairs = 0;
 let lives = 3;
+function flipCard(card) {
+    card.classList.toggle("flipCard");
+}
 for (let i = 0; i < cards.length; i += 1) {
     cards[i].addEventListener('click', async () => {
         if (!isclicked && cardsshown) {
-            cards[i].style.background = card_symbols[i];
+            flipCard(cards[i]);
             isclicked = true;
             prev = i;
         }
         else if (isclicked && fundone && cardsshown) {
             fundone = false;
-            cards[i].style.background = card_symbols[i];
+            flipCard(cards[i]);
             await sleep(500);
             if (card_symbols[prev] == card_symbols[i]) {
                 cards[prev].style.display = 'none';
                 cards[i].style.display = 'none';
+                flipCard(cards[prev]);
+                flipCard(cards[i]);
                 placeholders[prev].style.display = 'block';
                 placeholders[i].style.display = 'block';
                 pairs += 1;
@@ -59,8 +65,8 @@ for (let i = 0; i < cards.length; i += 1) {
                 }
             }
             else {
-                cards[prev].style.background = 'url("../img/cardback.png")';
-                cards[i].style.background = 'url("../img/cardback.png")';
+                flipCard(cards[prev]);
+                flipCard(cards[i]);
                 lives -= 1;
                 if (lives === 0) {
                     for (let i = 0; i < 12; i += 1) {
@@ -95,6 +101,7 @@ function gameStart() {
                 symbol = possible_symbols[getRandomInt(6)];
             }
             card_symbols.push(symbol);
+            front_cards[i].src = symbol;
         }
         showCards();
     }
