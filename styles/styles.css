@@ -126,13 +126,12 @@ main section {
     display: grid;
     grid-template-columns: 200px 200px 200px 200px 200px 200px;
     grid-template-rows: 300px 300px;
-    grid-column-gap: 50px;
+    grid-column-gap: 52px;
     grid-row-gap: 20px;
     width: 1500px;
     padding: 20px;
     grid-auto-columns: 200px;
     grid-auto-rows: 300px;
-    margin-top: 20px;
 }
 
 .card {
@@ -159,6 +158,7 @@ main section {
     background-color: #2f8245;
     border: none;
     border-radius: 10px;
+    margin: auto;
     margin-top: 20px;
     transition: 0.2s;
     border: solid #2f8245 2px;
@@ -229,4 +229,48 @@ main section {
 
 .unflipX {
     transform: rotateX(315deg);
+}
+
+.life {
+    width: 50px;
+    height: 50px;
+    margin-right: 5px;
+}
+
+#header {
+    width: 1500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#header-text {
+    text-align: center;
+}
+
+#counters {
+    width: 1500px;
+    height: 50px;
+    margin-top: 20px;
+    align-self: flex-start;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#lives {
+    margin-left: 20px;
+    width: 171.4px;
+}
+
+#timer, #score {
+    width: 171.4px;
+    text-align: center;
+    font-size: 43px;
+}
+
+#score {
+    text-align: right;
+    margin-right: 20px;
 }

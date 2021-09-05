@@ -2,6 +2,7 @@ const possible_symbols = ['img/cardfront1.png', 'img/cardfront2.png', 'img/cardf
 const cards = document.querySelectorAll('.card');
 const front_cards = document.querySelectorAll('.front');
 const placeholders = document.querySelectorAll('.placeholder');
+const life_icons = document.querySelectorAll('.life');
 console.log(cards.length);
 let card_symbols = [];
 Object.defineProperties(Array.prototype, {
@@ -22,6 +23,11 @@ const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 let cardsshown = false;
 const showCards = async () => {
     for (let i = 0; i < cards.length; i+=1) {
+        cards[i].style.display = 'block';
+        placeholders[i].style.display = 'none';
+    }
+    await sleep(100);
+    for (let i = 0; i < cards.length; i+=1) {
         flipCard(cards[i]);
     }
     //await sleep(3000);
@@ -36,7 +42,7 @@ let isclicked = false;
 let prev;
 let fundone = true;
 let pairs = 0;
-let lives = 3;
+let lives = 4;
 function flipCard(card) {
     card.classList.toggle("flipCard");
 }
@@ -69,6 +75,8 @@ for (let i = 0; i < cards.length; i += 1) {
                     cards[i].style.opacity = 0;
                     flipCard(cards[i]);
                     //flipX(cards[i]);
+                    pairs += 1;
+                    document.getElementById('score').innerHTML = pairs + ' / 6';
                     setTimeout(() => {
                         cards[prev].style.display = 'none';
                         cards[i].style.display = 'none';
@@ -80,10 +88,12 @@ for (let i = 0; i < cards.length; i += 1) {
                         cards[i].style.opacity = 1;
                         placeholders[prev].style.display = 'block';
                         placeholders[i].style.display = 'block';
-                        pairs += 1;
                         if (pairs === 6) {
                             for (let i = 0; i < 12; i += 1) {
                                 placeholders[i].style.display = 'none';
+                                if (i < 3) {
+                                    life_icons[i].style.display = 'none';
+                                }
                             }
                             document.getElementById('w').style.display = 'inline-block';
                         }                        
@@ -106,6 +116,7 @@ for (let i = 0; i < cards.length; i += 1) {
                         }
                         document.getElementById('l').style.display = 'inline-block';
                     }
+                    life_icons[lives - (lives == 0 ? 0 : 1)].style.display = 'none';
                     isclicked = false;
                     fundone = true;
                 }
@@ -114,24 +125,27 @@ for (let i = 0; i < cards.length; i += 1) {
     });
 }
 function gameStart() {
-    if (document.getElementById('w').style.display != 'none' || document.getElementById('l').style.display != 'none') {
-        document.getElementById('w').style.display = 'none';
-        document.getElementById('l').style.display = 'none';
-        cardsshown = false;
-        lives = 3;
-        pairs = 0;
-        for (let i = 0; i < 12; i += 1) {
-            cards[i].style.display = 'block';
+    document.getElementById('w').style.display = 'none';
+    document.getElementById('l').style.display = 'none';
+    cardsshown = false;
+    lives = 4;
+    pairs = 0;
+    //for (let i = 0; i < 12; i += 1) {
+    //    placeholders[i].style.display = 'none';
+    //    cards[i].style.display = 'block';
+    //}
+    card_symbols = [];
+    for (let i = 0; i < cards.length; i+=1) {
+        let symbol = possible_symbols[getRandomInt(6)];
+        while (card_symbols.count(symbol) == 2) {
+            symbol = possible_symbols[getRandomInt(6)];
         }
-        card_symbols = [];
-        for (let i = 0; i < cards.length; i+=1) {
-            let symbol = possible_symbols[getRandomInt(6)];
-            while (card_symbols.count(symbol) == 2) {
-                symbol = possible_symbols[getRandomInt(6)];
-            }
-            card_symbols.push(symbol);
-            front_cards[i].src = symbol;
+        card_symbols.push(symbol);
+        front_cards[i].src = symbol;
+        if (i < 3) {
+            life_icons[i].style.display = 'inline-block';
         }
-        showCards();
     }
+    document.getElementById('score').innerHTML = '0 / 6';
+    showCards();
 }
