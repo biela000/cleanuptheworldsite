@@ -91,9 +91,6 @@ for (let i = 0; i < cards.length; i += 1) {
                         if (pairs === 6) {
                             for (let i = 0; i < 12; i += 1) {
                                 placeholders[i].style.display = 'none';
-                                if (i < 3) {
-                                    life_icons[i].style.display = 'none';
-                                }
                             }
                             document.getElementById('w').style.display = 'inline-block';
                         }                        
@@ -116,7 +113,7 @@ for (let i = 0; i < cards.length; i += 1) {
                         }
                         document.getElementById('l').style.display = 'inline-block';
                     }
-                    life_icons[lives - (lives == 0 ? 0 : 1)].style.display = 'none';
+                    life_icons[lives - (lives == 0 ? 0 : 1)].style.opacity = 0.4;
                     isclicked = false;
                     fundone = true;
                 }
@@ -143,7 +140,7 @@ function gameStart() {
         card_symbols.push(symbol);
         front_cards[i].src = symbol;
         if (i < 3) {
-            life_icons[i].style.display = 'inline-block';
+            life_icons[i].style.opacity = 1;
         }
     }
     document.getElementById('score').innerHTML = '0 / 6';
