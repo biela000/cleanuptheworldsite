@@ -133,6 +133,7 @@ main section {
     transition: all 0.5s ease;
     border: solid #fff 2px;
     border-radius: 5px;
+    background-color: #fff;
 }
 
 .placeholder {
@@ -264,6 +265,10 @@ main section {
     margin-right: 20px;
 }
 
+.card img {
+    border-radius: 5px;
+}
+
 @media (min-width: 360px) {
     #cardset {
         grid-template-columns: 80px 80px 80px 80px;
@@ -282,7 +287,6 @@ main section {
         height: 120px;
     }
     .card img {
-        border-radius: 1.5px;
         width: 100%;
         height: 100%;
     }
@@ -316,7 +320,6 @@ main section {
         height: 150px;
     }
     .card img {
-        border-radius: 1.5px;
         width: 100%;
         height: 100%;
     }
@@ -346,7 +349,6 @@ main section {
         height: 225px;
     }
     .card img {
-        border-radius: 1.5px;
         width: 100%;
         height: 100%;
     }
@@ -387,7 +389,6 @@ main section {
         height: 300px;
     }
     .card img {
-        border-radius: 1.5px;
         width: 100%;
         height: 100%;
     }
