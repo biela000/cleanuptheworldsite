@@ -188,5 +188,5 @@ function gameStart() {
     }
     document.getElementById('score').innerHTML = '0 / 6';
     showCards();
-    setTimeout(startStopwatch(), 3000);
+    startStopwatch();
 }
