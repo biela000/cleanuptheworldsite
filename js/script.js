@@ -43,6 +43,46 @@ let prev;
 let fundone = true;
 let pairs = 0;
 let lives = 4;
+let secs = 0;
+let tens = 0;
+let mins = 0;
+let mint = 0;
+let val_id;
+function startStopwatch() {
+    val_id = setInterval(() => {
+        if (secs === 9) {
+            if (tens === 5) {
+                if (mins === 9) {
+                    mint += 1;
+                    mins = 0;
+                    tens = 0;
+                    secs = 0;
+                }
+                else {
+                    mins += 1;
+                    tens = 0;
+                    secs = 0;
+                }
+            }
+            else {
+                tens += 1;
+                secs = 0;
+            }
+        }
+        else {
+            secs += 1;
+        }
+        document.getElementById('timer').innerHTML = mint.toString() + mins.toString() + ':' + tens.toString() + secs.toString();
+    }, 1000);
+}
+function stopStopwatch() {
+    secs = 0;
+    tens = 0;
+    mins = 0;
+    mint = 0;
+    clearInterval(val_id);
+    document.getElementById('timer').innerHTML = '00:00';
+}
 function flipCard(card) {
     card.classList.toggle("flipCard");
 }
@@ -93,6 +133,7 @@ for (let i = 0; i < cards.length; i += 1) {
                                 placeholders[i].style.display = 'none';
                             }
                             document.getElementById('w').style.display = 'inline-block';
+                            stopStopwatch();
                         }                        
                         isclicked = false;
                         fundone = true;
@@ -112,6 +153,7 @@ for (let i = 0; i < cards.length; i += 1) {
                             }
                         }
                         document.getElementById('l').style.display = 'inline-block';
+                        stopStopwatch();
                     }
                     life_icons[lives - (lives == 0 ? 0 : 1)].style.opacity = 0.4;
                     isclicked = false;
@@ -122,6 +164,7 @@ for (let i = 0; i < cards.length; i += 1) {
     });
 }
 function gameStart() {
+    stopStopwatch();
     document.getElementById('w').style.display = 'none';
     document.getElementById('l').style.display = 'none';
     cardsshown = false;
@@ -145,4 +188,5 @@ function gameStart() {
     }
     document.getElementById('score').innerHTML = '0 / 6';
     showCards();
+    setTimeout(startStopwatch(), 3000);
 }
