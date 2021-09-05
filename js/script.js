@@ -132,12 +132,15 @@ for (let i = 0; i < cards.length; i += 1) {
                             for (let i = 0; i < 12; i += 1) {
                                 placeholders[i].style.display = 'none';
                             }
-                            document.getElementById('w').style.display = 'inline-block';
+                            document.getElementById('cardset').style.display = 'none';
+                            document.getElementById('timeW').innerHTML = 'Czas: ' + (mint > 0 ? mint.toString() + mins.toString() + ' minut, ' : '') + (tens > 0 ? tens.toString() : '') + secs.toString() + ' sekund';
+                            document.getElementById('life_number').innerHTML = 'Pozostałe życia: ' + lives;
+                            document.getElementById('w').style.display = 'block';
                             stopStopwatch();
                         }                        
                         isclicked = false;
                         fundone = true;
-                    }, 500);
+                    }, 300);
                 }
                 else {
                     flipCard(cards[prev]);
@@ -152,7 +155,10 @@ for (let i = 0; i < cards.length; i += 1) {
                                 placeholders[i].style.display = 'none';
                             }
                         }
-                        document.getElementById('l').style.display = 'inline-block';
+                        document.getElementById('cardset').style.display = 'none';
+                        document.getElementById('pair_number').innerHTML = 'Skompletowane pary: ' + pairs + '/6';
+                        document.getElementById('timeL').innerHTML = 'Czas: ' + (mint > 0 ? mint.toString() + mins.toString() + ' minut, ' : '') + (tens > 0 ? tens.toString() : '') + secs.toString() + ' sekund';
+                        document.getElementById('l').style.display = 'block';
                         stopStopwatch();
                     }
                     life_icons[lives - (lives == 0 ? 0 : 1)].style.opacity = 0.4;
@@ -167,6 +173,7 @@ function gameStart() {
     stopStopwatch();
     document.getElementById('w').style.display = 'none';
     document.getElementById('l').style.display = 'none';
+    document.getElementById('cardset').style.display = 'grid';
     cardsshown = false;
     lives = 4;
     pairs = 0;
